@@ -1,5 +1,7 @@
 package main.java.com.cisaacap.tourney.repository.auth;
 
+import main.java.com.cisaacap.tourney.config.ConnectionDB;
+import main.java.com.cisaacap.tourney.dto.request.auth.LoginRequest;
 import main.java.com.cisaacap.tourney.dto.request.auth.RegisterRequest;
 import main.java.com.cisaacap.tourney.dto.response.auth.RegisterResponse;
 import main.java.com.cisaacap.tourney.dto.response.auth.UsuarioResponse;
@@ -7,9 +9,39 @@ import main.java.com.cisaacap.tourney.dto.response.auth.UsuarioResponse;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import main.java.com.cisaacap.tourney.config.ConnectionDB;
 
 public class UsuarioRepository {
+
+    // PASO 1 LOGIN: Validar Credenciales de Usuario
+    public UsuarioResponse autenticarUsuario(LoginRequest req) {
+        String sql = "SELECT id_usuario, nickname, email FROM usuarios WHERE email = ? AND psswrd = ?";
+        UsuarioResponse response = new UsuarioResponse();
+
+        try (Connection conn = ConnectionDB.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, req.getEmail());
+            stmt.setString(2, req.getPsswrd());
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    response.setIdUsuario(rs.getInt("id_usuario"));
+                    response.setNickname(rs.getString("nickname"));
+                    response.setEmail(rs.getString("email"));
+                    response.setMensaje("Paso 1 completado: Credenciales válidas.");
+                    response.setExito(true);
+                } else {
+                    response.setMensaje("Correo o contraseña incorrectos.");
+                    response.setExito(false);
+                }
+            }
+
+        } catch (SQLException e) {
+            response.setMensaje("Error en la base de datos: " + e.getMessage());
+            response.setExito(false);
+        }
+
+        return response;
+    }
 
     // CREATE (Crear Usuario)
     public RegisterResponse crearUsuario(RegisterRequest req) {
@@ -89,13 +121,12 @@ public class UsuarioRepository {
                 usuario.setIdUsuario(rs.getInt("id_usuario"));
                 usuario.setNickname(rs.getString("nickname"));
                 usuario.setEmail(rs.getString("email"));
-                usuario.setMensaje("Listado exitoso");
+                usuario.setMensaje("Listado exitoso.");
                 usuario.setExito(true);
                 listaUsuarios.add(usuario);
             }
 
         } catch (SQLException e) {
-            // Se puede manejar el registro del error según prefiera la arquitectura
             e.printStackTrace();
         }
 
