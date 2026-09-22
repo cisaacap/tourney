@@ -12,7 +12,7 @@ public class JugadorRepository {
 
     // CREATE (Crear Perfil de Jugador)
     public JugadorResponse crearJugador(JugadorRequest req) {
-        String sql = "INSERT INTO jugadores (nombre, apellido, edad, id_equipo, id_usuario) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO jugadores (nombre, apellido, edad, id_usuario) VALUES (?, ?, ?, ?)";
         JugadorResponse response = new JugadorResponse();
 
         try (Connection conn = ConnectionDB.getConnection(); 
@@ -21,8 +21,7 @@ public class JugadorRepository {
             stmt.setString(1, req.getNombre());
             stmt.setString(2, req.getApellido());
             stmt.setInt(3, req.getEdad());
-            stmt.setInt(4, req.getIdEquipo());
-            stmt.setInt(5, req.getIdUsuario());
+            stmt.setInt(4, req.getIdUsuario());
 
             int rowsAffected = stmt.executeUpdate();
 
@@ -35,7 +34,6 @@ public class JugadorRepository {
                 response.setNombre(req.getNombre());
                 response.setApellido(req.getApellido());
                 response.setEdad(req.getEdad());
-                response.setIdEquipo(req.getIdEquipo());
                 response.setIdUsuario(req.getIdUsuario());
                 response.setMensaje("Perfil de Jugador creado exitosamente.");
                 response.setExito(true);

@@ -5,18 +5,25 @@ public class JugadorRequest {
     private String nombre;
     private String apellido;
     private int edad;
-    private int idEquipo;
     private int idUsuario;
-
+    private int idEquipo;
+    
     public JugadorRequest() {
     }
 
-    public JugadorRequest(String nombre, String apellido, int edad, int idEquipo, int idUsuario) {
+    public JugadorRequest(String nombre, String apellido, int edad, int idUsuario) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.edad = edad;
-        this.idEquipo = idEquipo;
         this.idUsuario = idUsuario;
+    }
+    
+    public JugadorRequest(String nombre, String apellido, int edad, int idUsuario, int idEquipo) {
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.edad = edad;
+        this.idUsuario = idUsuario;
+        this.idEquipo = idEquipo;
     }
 
     public String getNombre() {
@@ -42,6 +49,14 @@ public class JugadorRequest {
     public void setEdad(int edad) {
         this.edad = edad;
     }
+    
+    public int getIdUsuario() {
+        return idUsuario;
+    }
+    
+    public void setIdUsuario(int idUsuario) {
+        this.idUsuario = idUsuario;
+    }
 
     public int getIdEquipo() {
         return idEquipo;
@@ -49,13 +64,5 @@ public class JugadorRequest {
 
     public void setIdEquipo(int idEquipo) {
         this.idEquipo = idEquipo;
-    }
-
-    public int getIdUsuario() {
-        return idUsuario;
-    }
-
-    public void setIdUsuario(int idUsuario) {
-        this.idUsuario = idUsuario;
     }
 }
