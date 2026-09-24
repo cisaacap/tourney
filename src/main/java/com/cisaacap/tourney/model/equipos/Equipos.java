@@ -12,6 +12,12 @@ public class Equipos {
     /*  ======================================
             CONSTRUCTOR
           ====================================== */
+
+    public Equipos(int idEquipo, String nombreEquipo) {
+        this.idEquipo = idEquipo;
+        this.nombreEquipo = nombreEquipo;
+    }
+    
     public Equipos(int idEquipo, String nombreEquipo, String ciudad) {
         this.idEquipo = idEquipo;
         this.nombreEquipo = nombreEquipo;

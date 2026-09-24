@@ -180,4 +180,23 @@ public class TorneoRepository {
 
         return response;
     }
+
+    public ObservableList<TorneoResponse> obtenerTodos() {
+        String sql = "SELECT id_torneo, nombre_torneo FROM torneos";
+        ObservableList<TorneoResponse> lista = FXCollections.observableArrayList();
+
+        try (Connection conn = ConnectionDB.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql); ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) {
+                TorneoResponse t = new TorneoResponse();
+                t.setIdTorneo(rs.getInt("id_torneo"));
+                t.setNombreTorneo(rs.getString("nombre_torneo"));
+                lista.add(t);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return lista;
+    }
+
 }

@@ -93,12 +93,6 @@ public class JugadorService {
             return response;
         }
 
-        if (req.getIdEquipo() <= 0) {
-            response.setMensaje("El ID de equipo es inválido.");
-            response.setExito(false);
-            return response;
-        }
-
         return jugadorRepository.actualizarJugador(req, idJugador);
     }
 

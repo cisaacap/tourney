@@ -7,9 +7,12 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import main.java.com.cisaacap.tourney.controller.auth.LoginController;
 import main.java.com.cisaacap.tourney.controller.auth.RegisterController;
+import main.java.com.cisaacap.tourney.controller.dashboard.DashboardController;
 import main.java.com.cisaacap.tourney.repository.auth.UsuarioRepository;
+import main.java.com.cisaacap.tourney.repository.dashboard.partidos.PartidoRepository;
 import main.java.com.cisaacap.tourney.repository.jugadores.JugadorRepository;
 import main.java.com.cisaacap.tourney.service.auth.UsuarioService;
+import main.java.com.cisaacap.tourney.service.dashboard.partidos.PartidoService;
 import main.java.com.cisaacap.tourney.service.jugadores.JugadorService;
 
 public class SceneManager {
@@ -113,4 +116,31 @@ public class SceneManager {
         primaryStage.centerOnScreen();
         primaryStage.show();
     }
+    
+    public void showDashboardView() throws Exception {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(FXML_PATH + "dashboard/dashboard-view.fxml"));
+        loader.setControllerFactory(clazz -> {
+            if (clazz == DashboardController.class) {
+                PartidoRepository gameRepo = new PartidoRepository();
+                JugadorRepository playerRepository = new JugadorRepository();
+                PartidoService gameService = new PartidoService(gameRepo);
+                JugadorService playerService = new JugadorService(playerRepository);
+                return new DashboardController(this, gameService, playerService);
+            }
+            try {
+                return clazz.getDeclaredConstructor().newInstance();
+            } catch (Exception e) {
+                throw new RuntimeException("Error al crear el constructor: " + e.getMessage());
+            }
+        });
+
+        Parent root = loader.load();
+        Scene scene = new Scene(root, 900, 600);
+        scene.setFill(Color.TRANSPARENT);
+
+        primaryStage.setScene(scene);
+        primaryStage.centerOnScreen();
+        primaryStage.show();
+    }
+    
 }
