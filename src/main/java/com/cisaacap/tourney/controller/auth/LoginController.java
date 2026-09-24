@@ -98,8 +98,12 @@ public class LoginController implements Initializable {
             UsuarioResponse response = usuarioService.autenticarUsuario(request);
 
             if (response != null && response.isExito()) {
-                // Redirigir a la vista principal tras autenticación exitosa
-                //stage.showDashboard();
+                // === AQUÍ SE GUARDA LA SESIÓN EN EL SCENEMANAGER ===
+                // Asumiendo que response.getIdUsuario() retorna Long o Integer
+                stage.setTempUserId((long) response.getIdUsuario());
+
+                // Navegar al Dashboard
+                stage.showDashboardView();
             } else {
                 marcarError(emailField);
                 marcarError(passwordField);

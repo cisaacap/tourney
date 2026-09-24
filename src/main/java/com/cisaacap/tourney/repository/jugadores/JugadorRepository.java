@@ -150,16 +150,26 @@ public class JugadorRepository {
     // UPDATE (Actualizar Jugador)
     public JugadorResponse actualizarJugador(JugadorRequest req, int idJugador) {
         String sql = "UPDATE jugadores SET nombre = ?, apellido = ?, edad = ?, id_equipo = ? WHERE id_jugador = ?";
+        String sql2 = "UPDATE jugadores SET nombre = ?, apellido = ?, edad = ? WHERE id_jugador = ?";
+
         JugadorResponse response = new JugadorResponse();
-
+        String sqlFinal = (response.getIdEquipo() > 0) ? sql : sql2;
+        
         try (Connection conn = ConnectionDB.getConnection(); 
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+             PreparedStatement stmt = conn.prepareStatement(sqlFinal)) {
 
-            stmt.setString(1, req.getNombre());
-            stmt.setString(2, req.getApellido());
-            stmt.setInt(3, req.getEdad());
-            stmt.setInt(4, req.getIdEquipo());
-            stmt.setInt(5, idJugador);
+            if (sqlFinal.equals(sql)) {
+                stmt.setString(1, req.getNombre());
+                stmt.setString(2, req.getApellido());
+                stmt.setInt(3, req.getEdad());
+                stmt.setInt(4, req.getIdEquipo());
+                stmt.setInt(5, idJugador); 
+            } else {
+                stmt.setString(1, req.getNombre());
+                stmt.setString(2, req.getApellido());
+                stmt.setInt(3, req.getEdad());
+                stmt.setInt(4, idJugador); 
+            }
 
             int rowsAffected = stmt.executeUpdate();
 

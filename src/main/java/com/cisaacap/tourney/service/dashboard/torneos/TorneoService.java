@@ -4,15 +4,18 @@ import main.java.com.cisaacap.tourney.dto.request.dashboard.torneos.TorneoReques
 import main.java.com.cisaacap.tourney.dto.response.dashboard.torneos.TorneoResponse;
 import main.java.com.cisaacap.tourney.repository.dashboard.torneos.TorneoRepository;
 
-import java.time.LocalDate;
 import javafx.collections.ObservableList;
+import main.java.com.cisaacap.tourney.model.deporte.Deportes;
+import main.java.com.cisaacap.tourney.repository.dashboard.deporte.DeporteRepository;
 
 public class TorneoService {
 
     private final TorneoRepository torneoRepository;
-
-    public TorneoService(TorneoRepository torneoRepository) {
+    private final DeporteRepository depRepo;
+    
+    public TorneoService(TorneoRepository torneoRepository, DeporteRepository depRepo) {
         this.torneoRepository = torneoRepository;
+        this.depRepo = depRepo;
     }
 
     public TorneoResponse registrarTorneo(TorneoRequest req) {
@@ -100,4 +103,9 @@ public class TorneoService {
 
         return null; // Sin errores
     }
+    
+    public ObservableList<Deportes> obtenerDeportes() {
+        return depRepo.findAll();
+    }
+    
 }

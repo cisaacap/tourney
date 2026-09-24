@@ -15,7 +15,7 @@ public class Main extends Application {
 
         SceneManager sceneManager = new SceneManager(primaryStage);
         try {
-            sceneManager.showRegisterView();
+            sceneManager.showLoginView();
         } catch (Exception e) {
             e.printStackTrace();
         }
