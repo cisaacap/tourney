@@ -16,13 +16,16 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.util.converter.IntegerStringConverter;
 
+import main.java.com.cisaacap.tourney.dto.request.dashboard.partidos.PartidoRequest;
 import main.java.com.cisaacap.tourney.dto.request.jugadores.JugadorRequest;
 import main.java.com.cisaacap.tourney.dto.response.dashboard.partidos.PartidosResponse;
 import main.java.com.cisaacap.tourney.dto.response.jugadores.JugadorResponse;
@@ -96,20 +99,65 @@ public class DashboardController implements Initializable {
     }
 
     private void setupTableColumns() {
+        // Habilitar la edición en el TableView
+        partidosTableView.setEditable(true);
+
+        // Columnas no editables
         colDeporte.setCellValueFactory(cellData
                 -> new SimpleStringProperty(cellData.getValue() != null ? cellData.getValue().getNombreTorneo() : ""));
 
         colEquipoLocal.setCellValueFactory(cellData
                 -> new SimpleStringProperty(cellData.getValue() != null ? cellData.getValue().getNombreEquipoLocal() : ""));
 
+        colEquipoVisitante.setCellValueFactory(cellData
+                -> new SimpleStringProperty(cellData.getValue() != null ? cellData.getValue().getNombreEquipoVisitante() : ""));
+
+        // --- COLUMNA PUNTOS LOCAL (Editable) ---
         colPuntosLocal.setCellValueFactory(cellData
                 -> new SimpleIntegerProperty(cellData.getValue() != null ? cellData.getValue().getPuntosLocal() : 0).asObject());
 
+        colPuntosLocal.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
+        colPuntosLocal.setOnEditCommit(event -> {
+            PartidosResponse partido = event.getRowValue();
+            int nuevoPuntaje = event.getNewValue() != null ? event.getNewValue() : 0;
+
+            partido.setPuntosLocal(nuevoPuntaje);
+            guardarCambioPuntos(partido);
+        });
+
+        // --- COLUMNA PUNTOS VISITANTE (Editable) ---
         colPuntosVisitante.setCellValueFactory(cellData
                 -> new SimpleIntegerProperty(cellData.getValue() != null ? cellData.getValue().getPuntosVisitante() : 0).asObject());
 
-        colEquipoVisitante.setCellValueFactory(cellData
-                -> new SimpleStringProperty(cellData.getValue() != null ? cellData.getValue().getNombreEquipoVisitante() : ""));
+        colPuntosVisitante.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
+        colPuntosVisitante.setOnEditCommit(event -> {
+            PartidosResponse partido = event.getRowValue();
+            int nuevoPuntaje = event.getNewValue() != null ? event.getNewValue() : 0;
+
+            partido.setPuntosVisitante(nuevoPuntaje);
+            guardarCambioPuntos(partido);
+        });
+    }
+
+    private void guardarCambioPuntos(PartidosResponse partido) {
+        if (partido == null || partidoService == null) {
+            return;
+        }
+
+        PartidoRequest req = new PartidoRequest();
+        req.setIdTorneo(partido.getIdTorneo());
+        req.setIdEquipoLocal(partido.getIdEquipoLocal());
+        req.setIdEquipoVisitante(partido.getIdEquipoVisitante());
+        req.setPuntosLocal(partido.getPuntosLocal());
+        req.setPuntosVisitante(partido.getPuntosVisitante());
+        req.setFechaHora(partido.getFechaHora());
+
+        PartidosResponse res = partidoService.actualizarResultado(partido.getIdPartido(), req);
+
+        if (!res.isExito()) {
+            System.err.println("Error al actualizar puntos en la BD: " + res.getMensaje());
+            cargarPartidos(); // Recargar datos para revertir la celda al valor original en la interfaz
+        }
     }
 
     private void cargarPartidos() {
@@ -222,10 +270,8 @@ public class DashboardController implements Initializable {
 
     private void abrirVentanaEmergente(String fxmlPath, String titulo) {
         try {
-            // Intenta cargar desde la raíz de resources
             URL fxmlUrl = getClass().getResource(fxmlPath);
 
-            // Si la ruta raíz falla, intenta con la ruta relativa del proyecto
             if (fxmlUrl == null) {
                 fxmlUrl = getClass().getResource("/main/resources" + fxmlPath);
             }

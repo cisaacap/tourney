@@ -46,7 +46,7 @@
                         <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                     <children>
-                        
+
                         <VBox alignment="CENTER" prefHeight="450.0" prefWidth="300.0" spacing="18.0" styleClass="esports-brand-box">
                             <children>
                                 <ImageView fx:id="logoImageView" fitHeight="100.0" fitWidth="110.0" pickOnBounds="true" preserveRatio="true" styleClass="esports-logo">
@@ -98,7 +98,7 @@
                                 <VBox alignment="CENTER" spacing="8.0" VBox.vgrow="ALWAYS">
                                     <children>
                                         <Button fx:id="registerButton" mnemonicParsing="false" onAction="#handleShowRegisterView" prefHeight="44.0" prefWidth="230.0" styleClass="esports-btn-primary" text="SIGUIENTE" />
-                                        <Hyperlink fx:id="loginHyperlink" styleClass="esports-hyperlink" onAction="#handleShowLoginView" text="¿Ya tienes cuenta? Inicia Sesión" />
+                                        <Hyperlink fx:id="loginHyperlink" onAction="#handleGoToLogin" styleClass="esports-hyperlink" text="¿Ya tienes cuenta? Inicia Sesión" />
                                     </children>
                                     <padding>
                                         <Insets top="10.0" />

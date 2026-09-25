@@ -31,7 +31,7 @@ public class RegisterController implements Initializable {
     @FXML
     private Button minimizeButton;
 
-    // Campos Paso 1
+    // Campos Paso 1 (Usuario)
     @FXML
     private TextField nicknameField;
     @FXML
@@ -41,7 +41,7 @@ public class RegisterController implements Initializable {
     @FXML
     private PasswordField confirmPasswordField;
 
-    // Campos Paso 2
+    // Campos Paso 2 (Jugador)
     @FXML
     private TextField nombreField;
     @FXML
@@ -60,12 +60,18 @@ public class RegisterController implements Initializable {
     private Long userId;
 
     private final SceneManager stage;
-    private final UsuarioService usuarioService;
-    private final JugadorService jugadorService;
+    private UsuarioService usuarioService;
+    private JugadorService jugadorService;
 
-    public RegisterController(SceneManager stage, UsuarioService usuarioService, JugadorService jugadorService) {
+    // Constructor Paso 1: Registro de Usuario
+    public RegisterController(SceneManager stage, UsuarioService usuarioService) {
         this.stage = stage;
         this.usuarioService = usuarioService;
+    }
+
+    // Constructor Paso 2: Registro de Jugador
+    public RegisterController(SceneManager stage, JugadorService jugadorService) {
+        this.stage = stage;
         this.jugadorService = jugadorService;
     }
 
@@ -77,52 +83,40 @@ public class RegisterController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         setupWindowControls();
 
-        if (registerButton != null) {
-            registerButton.setOnAction(event -> {
-                // Si el campo nombreField NO es nulo, estamos en el Paso 2 (Jugador)
-                if (nombreField != null) {
-                    handleShowLoginView();
-                } else {
-                    // Si nombreField es nulo, estamos en el Paso 1 (Usuario)
-                    handleShowRegisterView();
-                }
-            });
-        }
-
         if (loginHyperlink != null) {
             loginHyperlink.setOnAction(event -> {
                 try {
                     handleGoToLogin();
                 } catch (Exception ex) {
-                    Logger.getLogger(RegisterController.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(RegisterController.class.getName()).log(Level.SEVERE, "Error al redirigir al login", ex);
                 }
             });
         }
     }
 
-    // Proceso del Paso 2: Registro del jugador
     @FXML
-    private void handleShowLoginView() {
+    private void handleRegisterPlayer() {
         removerEstilosError();
 
         boolean camposValidos = true;
 
-        if (esVacio(nombreField.getText())) {
+        if (nombreField == null || esVacio(nombreField.getText())) {
             marcarError(nombreField);
             camposValidos = false;
         }
 
-        if (esVacio(apellidoField.getText())) {
+        if (apellidoField == null || esVacio(apellidoField.getText())) {
             marcarError(apellidoField);
             camposValidos = false;
         }
 
-        if (esVacio(edadField.getText())) {
+        if (edadField == null || esVacio(edadField.getText())) {
             marcarError(edadField);
             camposValidos = false;
         }
 
         if (!camposValidos) {
+            System.out.println("Por favor completa todos los campos del jugador.");
             return;
         }
 
@@ -131,66 +125,80 @@ public class RegisterController implements Initializable {
             req.setNombre(nombreField.getText().trim());
             req.setApellido(apellidoField.getText().trim());
 
-            // Validar conversión numérica de la edad
             try {
                 req.setEdad(Integer.parseInt(edadField.getText().trim()));
             } catch (NumberFormatException e) {
                 marcarError(edadField);
+                System.err.println("La edad ingresada no es un número entero válido.");
                 return;
             }
 
-            // Obtener el ID del usuario guardado
             Long idTemp = stage.getTempUserId() != null ? stage.getTempUserId() : this.userId;
-            if (idTemp != null) {
-                req.setIdUsuario(idTemp.intValue());
+
+            if (idTemp == null) {
+                System.err.println("ERROR: No se encontró el ID de usuario registrado previamente (tempUserId es null).");
+                return;
+            }
+
+            req.setIdUsuario(idTemp.intValue());
+
+            if (jugadorService == null) {
+                System.err.println("ERROR: jugadorService es NULL. Revisa la inyección en SceneManager.");
+                return;
             }
 
             JugadorResponse response = jugadorService.registrarJugador(req);
 
             if (response != null && response.isExito()) {
-                stage.setTempUserId(null); // Limpiar ID temporal
-                stage.showLoginView();     // Redirigir al Login
+                System.out.println("Perfil de jugador guardado exitosamente.");
+                stage.setTempUserId(null);
+                stage.showLoginView();
+            } else {
+                String msg = (response != null && response.getMensaje() != null) ? response.getMensaje() : "Error en la inserción a BD.";
+                System.err.println("Error del servicio al registrar jugador: " + msg);
             }
 
         } catch (Exception e) {
+            System.err.println("Excepción durante el registro del jugador:");
             e.printStackTrace();
         }
     }
 
-    // Proceso del Paso 1: Registro del usuario
     @FXML
     private void handleShowRegisterView() {
         removerEstilosError();
 
         boolean camposValidos = true;
 
-        if (esVacio(nicknameField.getText())) {
+        if (nicknameField == null || esVacio(nicknameField.getText())) {
             marcarError(nicknameField);
             camposValidos = false;
         }
 
-        if (esVacio(emailField.getText())) {
+        if (emailField == null || esVacio(emailField.getText())) {
             marcarError(emailField);
             camposValidos = false;
         }
 
-        if (esVacio(passwordField.getText())) {
+        if (passwordField == null || esVacio(passwordField.getText())) {
             marcarError(passwordField);
             camposValidos = false;
         }
 
-        if (esVacio(confirmPasswordField.getText())) {
+        if (confirmPasswordField == null || esVacio(confirmPasswordField.getText())) {
             marcarError(confirmPasswordField);
             camposValidos = false;
         }
 
         if (!camposValidos) {
+            System.out.println("Por favor completa todos los campos del usuario.");
             return;
         }
 
         if (!passwordField.getText().equals(confirmPasswordField.getText())) {
             marcarError(passwordField);
             marcarError(confirmPasswordField);
+            System.out.println("Las contraseñas no coinciden.");
             return;
         }
 
@@ -200,16 +208,20 @@ public class RegisterController implements Initializable {
             request.setEmail(emailField.getText().trim());
             request.setPsswrd(passwordField.getText());
 
+            if (usuarioService == null) {
+                System.err.println("ERROR: usuarioService es NULL.");
+                return;
+            }
+
             RegisterResponse response = usuarioService.registrarUsuario(request);
 
             if (response != null && response.isExito()) {
                 if (response.getIdUsuario() != 0) {
                     stage.setTempUserId((long) response.getIdUsuario());
                 }
-
                 stage.showRegisterPlayerView();
             } else {
-                System.out.println(response != null ? response.getMensaje() : "Error desconocido en el registro.");
+                System.err.println(response != null ? response.getMensaje() : "Error desconocido al registrar usuario.");
             }
 
         } catch (Exception e) {
@@ -222,7 +234,7 @@ public class RegisterController implements Initializable {
         try {
             stage.showLoginView();
         } catch (Exception e) {
-            e.printStackTrace();
+            System.err.println("Error al ir a la pantalla de login: " + e.getMessage());
         }
     }
 

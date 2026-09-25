@@ -35,7 +35,6 @@ public class SceneManager {
         this.tempUserId = tempUserId;
     }
 
-    
     public void showLoginView() throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(FXML_PATH + "auth/login-view.fxml"));
         loader.setControllerFactory(clazz -> {
@@ -59,17 +58,17 @@ public class SceneManager {
         primaryStage.centerOnScreen();
         primaryStage.show();
     }
-    
+
     // Paso 1: Registro básico (Email, contraseña, nickname)
     public void showRegisterView() throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(FXML_PATH + "auth/register-view.fxml"));
         loader.setControllerFactory(clazz -> {
             if (clazz == RegisterController.class) {
                 UsuarioRepository authRepository = new UsuarioRepository();
-                JugadorRepository playerRepository = new JugadorRepository();
                 UsuarioService authService = new UsuarioService(authRepository);
-                JugadorService playerService = new JugadorService(playerRepository);
-                return new RegisterController(this, authService, playerService);
+
+                // Instancia usando el constructor de Usuario (Paso 1)
+                return new RegisterController(this, authService);
             }
             try {
                 return clazz.getDeclaredConstructor().newInstance();
@@ -87,17 +86,16 @@ public class SceneManager {
         primaryStage.show();
     }
 
+    // Paso 2: Registro de perfil del jugador (Nombre, apellido, edad)
     public void showRegisterPlayerView() throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(FXML_PATH + "jugadores/register-jugador-view.fxml"));
         loader.setControllerFactory(clazz -> {
             if (clazz == RegisterController.class) {
-                UsuarioRepository authRepository = new UsuarioRepository();
                 JugadorRepository playerRepository = new JugadorRepository();
-                UsuarioService authService = new UsuarioService(authRepository);
                 JugadorService playerService = new JugadorService(playerRepository);
 
-                RegisterController controller = new RegisterController(this, authService, playerService);
-                // Le inyectamos el ID guardado en la sesión
+                // Instancia usando el constructor de Jugador (Paso 2)
+                RegisterController controller = new RegisterController(this, playerService);
                 controller.setUserId(this.tempUserId);
                 return controller;
             }
@@ -116,7 +114,7 @@ public class SceneManager {
         primaryStage.centerOnScreen();
         primaryStage.show();
     }
-    
+
     public void showDashboardView() throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(FXML_PATH + "dashboard/dashboard-view.fxml"));
         loader.setControllerFactory(clazz -> {
@@ -142,5 +140,4 @@ public class SceneManager {
         primaryStage.centerOnScreen();
         primaryStage.show();
     }
-    
 }

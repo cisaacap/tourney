@@ -71,8 +71,7 @@
 
                                 <VBox alignment="CENTER" spacing="6.0" VBox.vgrow="ALWAYS">
                                     <children>
-                                        <Button fx:id="registerButton" onAction="#handleShowLoginView" mnemonicParsing="false" prefHeight="40.0" prefWidth="230.0" styleClass="esports-btn-primary" text="CREAR PERFIL JUGADOR" />
-                                        <Hyperlink fx:id="loginHyperlink" styleClass="esports-hyperlink" text="¿Ya tienes perfil? Iniciar Sesión" />
+                                       <Button fx:id="registerButton" onAction="#handleRegisterPlayer" mnemonicParsing="false" prefHeight="40.0" prefWidth="230.0" styleClass="esports-btn-primary" text="CREAR PERFIL JUGADOR" />
                                     </children>
                                     <padding>
                                         <Insets top="5.0" />

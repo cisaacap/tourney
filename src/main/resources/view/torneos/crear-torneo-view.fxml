@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefWidth="420.0" styleClass="esports-container-card" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.com.cisaacap.tourney.controller.dashboard.CrearEquipoController">
+<AnchorPane prefWidth="420.0" styleClass="esports-container-card" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.com.cisaacap.tourney.controller.dashboard.CrearTorneoController">
     <stylesheets>
         <URL value="@/main/resources/css/dashboard/dashboard-view.css" />
     </stylesheets>
