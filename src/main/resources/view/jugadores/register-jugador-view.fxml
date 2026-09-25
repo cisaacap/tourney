@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane id="AnchorPane" fx:id="rootPane" prefHeight="600.0" prefWidth="900.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.com.cisaacap.tourney.controller.auth.RegisterController">
+    <stylesheets>
+        <URL value="@/main/resources/css/auth/register-view.css" />
+    </stylesheets>
+    <children>
+        <BorderPane fx:id="mainBorderPane" prefHeight="600.0" prefWidth="900.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <top>
+                <HBox fx:id="windowHeader" alignment="CENTER_RIGHT" prefHeight="40.0" prefWidth="900.0" spacing="10.0" styleClass="window-header" BorderPane.alignment="CENTER">
+                    <children>
+                        <Button fx:id="minimizeButton" mnemonicParsing="false" styleClass="window-btn-minimize" text="—" />
+                        <Button fx:id="closeButton" mnemonicParsing="false" styleClass="window-btn-close" text="✕" />
+                    </children>
+                    <padding>
+                        <Insets right="15.0" />
+                    </padding>
+                </HBox>
+            </top>
+            <center>
+                <GridPane fx:id="mainGridContainer" alignment="CENTER" hgap="25.0" maxHeight="500.0" maxWidth="820.0" styleClass="esports-container-card" BorderPane.alignment="CENTER">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="320.0" percentWidth="55.0" prefWidth="420.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="15.0" minWidth="1.0" prefWidth="15.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="280.0" percentWidth="42.0" prefWidth="320.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                    <children>
+                        
+                        <VBox fx:id="formVBox" alignment="CENTER_LEFT" prefHeight="450.0" prefWidth="400.0" spacing="8.0" styleClass="esports-form-box" GridPane.columnIndex="0">
+                            <children>
+                                <VBox spacing="2.0">
+                                    <children>
+                                        <Label styleClass="esports-field-label" text="Nombre" />
+                                        <TextField fx:id="nombreField" promptText="Ej. Carlos" styleClass="esports-text-field" />
+                                    </children>
+                                </VBox>
+
+                                <VBox spacing="2.0">
+                                    <children>
+                                        <Label styleClass="esports-field-label" text="Apellido" />
+                                        <TextField fx:id="apellidoField" promptText="Ej. Pérez" styleClass="esports-text-field" />
+                                    </children>
+                                </VBox>
+
+                                <VBox spacing="2.0">
+                                    <children>
+                                        <Label styleClass="esports-field-label" text="Edad" />
+                                        <TextField fx:id="edadField" promptText="Ej. 20" styleClass="esports-text-field" />
+                                    </children>
+                                </VBox>
+
+                                <VBox alignment="CENTER" spacing="6.0" VBox.vgrow="ALWAYS">
+                                    <children>
+                                       <Button fx:id="registerButton" onAction="#handleRegisterPlayer" mnemonicParsing="false" prefHeight="40.0" prefWidth="230.0" styleClass="esports-btn-primary" text="CREAR PERFIL JUGADOR" />
+                                    </children>
+                                    <padding>
+                                        <Insets top="5.0" />
+                                    </padding>
+                                </VBox>
+                            </children>
+                            <padding>
+                                <Insets bottom="10.0" left="25.0" right="25.0" top="10.0" />
+                            </padding>
+                        </VBox>
+
+                        <Separator orientation="VERTICAL" prefHeight="380.0" styleClass="esports-vertical-separator" GridPane.columnIndex="1" />
+
+                        <!-- PANEL DE MARCA / DESCRIPCIÓN (Columna 2 - Derecha) -->
+                        <VBox alignment="CENTER" prefHeight="450.0" prefWidth="300.0" spacing="18.0" styleClass="esports-brand-box" GridPane.columnIndex="2">
+                            <children>
+                                <ImageView fx:id="logoImageView" fitHeight="100.0" fitWidth="110.0" pickOnBounds="true" preserveRatio="true" styleClass="esports-logo">
+                                    <image>
+                                        <Image url="@../../assets/tourney_logo.png" />
+                                    </image>
+                                </ImageView>
+                                <Label fx:id="titleAppLabel" styleClass="esports-title" text="PERFIL DE JUGADOR" textAlignment="CENTER" wrapText="true" />
+                                <Separator prefWidth="180.0" styleClass="esports-separator" />
+                                <Label fx:id="descriptionLabel" alignment="CENTER" styleClass="esports-description" text="Registra tus datos personales, vincula tu equipo y prepárate para competir en los mejores eSports." textAlignment="CENTER" wrapText="true" />
+                            </children>
+                            <padding>
+                                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                            </padding>
+                        </VBox>
+
+                    </children>
+                    <padding>
+                        <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
+                    </padding>
+                </GridPane>
+            </center>
+        </BorderPane>
+    </children>
+</AnchorPane>

@@ -1,0 +1,161 @@
+/* =======================================
+     FONDO GENERAL Y BORDES REDONDEADOS DE VENTANA
+   ======================================= */
+.mainFxmlClass {
+    -fx-background-color: radial-gradient(center 50% 40%, radius 85%, #150609, #050102);
+    -fx-background-radius: 20px;
+    -fx-border-radius: 20px;
+    -fx-border-color: linear-gradient(to bottom right, #b80c2e, #800f2f, #480ca8);
+    -fx-border-width: 1.5px;
+}
+
+/* =======================================
+     ENCABEZADO DE VENTANA TRANSPARENTE
+   ======================================= */
+.window-header {
+    -fx-background-color: transparent;
+}
+
+.window-btn-minimize, .window-btn-close {
+    -fx-background-color: rgba(255, 255, 255, 0.04);
+    -fx-text-fill: #e0a96d;
+    -fx-font-family: "Segoe UI Rounded", "Arial Rounded MT Bold", sans-serif;
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 50px;
+    -fx-min-width: 28px;
+    -fx-min-height: 28px;
+    -fx-max-width: 28px;
+    -fx-max-height: 28px;
+    -fx-cursor: hand;
+}
+
+.window-btn-minimize:hover {
+    -fx-background-color: linear-gradient(to right, #b80c2e, #7209b7);
+    -fx-text-fill: white;
+}
+
+.window-btn-close:hover {
+    -fx-background-color: #b80c2e;
+    -fx-text-fill: white;
+    -fx-effect: dropshadow(three-pass-box, rgba(184, 12, 46, 0.6), 8, 0, 0, 0);
+}
+
+/* =======================================
+     TARJETA CONTENEDORA GAMING
+   ======================================= */
+.esports-container-card {
+    -fx-background-color: linear-gradient(to bottom right, #1a070c, #0a0204);
+    -fx-background-radius: 20px;
+    -fx-border-color: linear-gradient(to right, rgba(184, 12, 46, 0.4), rgba(72, 12, 168, 0.4));
+    -fx-border-radius: 20px;
+    -fx-border-width: 1px;
+}
+
+/* =======================================
+     PANEL IZQUIERDO Y MARCA
+   ======================================= */
+.esports-brand-box {
+    -fx-alignment: center;
+}
+
+.esports-logo {
+    -fx-effect: dropshadow(three-pass-box, rgba(184, 12, 46, 0.3), 14, 0, 0, 0);
+}
+
+.esports-title {
+    -fx-font-family: "Arial Rounded MT Bold", "Quicksand", "Comic Sans MS", sans-serif;
+    -fx-font-size: 19px;
+    -fx-font-weight: bold;
+    /* Degradado RGB sutil: Carmesí -> Violeta -> Azul */
+    -fx-text-fill: linear-gradient(to right, #ff4d6d, #b80c2e, #4361ee);
+    -fx-effect: dropshadow(three-pass-box, rgba(184, 12, 46, 0.4), 8, 0, 0, 0);
+}
+
+.esports-description {
+    -fx-font-family: "Segoe UI Rounded", "Arial Rounded MT Bold", "Quicksand", sans-serif;
+    -fx-font-size: 12px;
+    -fx-text-fill: #d8b4bc;
+    -fx-line-spacing: 2px;
+}
+
+/* =======================================
+     SEPARADORES CON DEGRADADO RGB SUAVE
+   ======================================= */
+.esports-separator {
+    -fx-background-color: linear-gradient(to right, transparent, #b80c2e, #7209b7, transparent);
+    -fx-pref-height: 1.5px;
+}
+
+.esports-vertical-separator {
+    -fx-background-color: linear-gradient(to bottom, transparent, #420d18, transparent);
+    -fx-pref-width: 1.5px;
+}
+
+/* =======================================
+     FORMULARIO Y CAMPOS REDONDOS
+   ======================================= */
+.esports-field-label {
+    -fx-font-family: "Arial Rounded MT Bold", "Quicksand", "Segoe UI Rounded", sans-serif;
+    -fx-font-size: 12px;
+    -fx-text-fill: #f07167;
+}
+
+.esports-text-field {
+    -fx-background-color: #0d0205;
+    -fx-text-fill: #fff0f3;
+    -fx-prompt-text-fill: #70404a;
+    -fx-border-color: #420d18;
+    -fx-border-radius: 30px;
+    -fx-background-radius: 30px;
+    -fx-padding: 10px 16px;
+    -fx-font-family: "Segoe UI Rounded", "Arial Rounded MT Bold", sans-serif;
+    -fx-font-size: 13px;
+}
+
+.esports-text-field:focused {
+    /* Borde RGB dinámico al enfocar */
+    -fx-border-color: linear-gradient(to right, #b80c2e, #4361ee);
+    -fx-effect: dropshadow(three-pass-box, rgba(72, 12, 168, 0.4), 10, 0, 0, 0);
+}
+
+/* =======================================
+     BOTONES Y CONTROLES REDONDEADOS (RGB)
+   ======================================= */
+.esports-btn-primary {
+    /* Efecto RGB lineal elegante (Carmesí, Magenta, Azul Neón apagado) */
+    -fx-background-color: linear-gradient(to right, #b80c2e, #7209b7, #3a0ca3);
+    -fx-text-fill: #ffffff;
+    -fx-font-family: "Arial Rounded MT Bold", "Quicksand", sans-serif;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-border-radius: 30px;
+    -fx-background-radius: 30px;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(three-pass-box, rgba(114, 9, 183, 0.4), 12, 0, 0, 0);
+}
+
+.esports-btn-primary:hover {
+    -fx-background-color: linear-gradient(to right, #d90429, #b5179e, #4361ee);
+    -fx-effect: dropshadow(three-pass-box, rgba(67, 97, 238, 0.6), 16, 0, 0, 0);
+}
+
+.esports-btn-primary:pressed {
+    -fx-scale-x: 0.97;
+    -fx-scale-y: 0.97;
+}
+
+/* =======================================
+     ENLACES E HIPERVÍNCULOS
+   ======================================= */
+.esports-hyperlink {
+    -fx-text-fill: #f28482;
+    -fx-font-family: "Segoe UI Rounded", "Arial Rounded MT Bold", sans-serif;
+    -fx-font-size: 12px;
+    -fx-underline: false;
+}
+
+.esports-hyperlink:hover {
+    -fx-text-fill: #4361ee;
+    -fx-underline: true;
+}

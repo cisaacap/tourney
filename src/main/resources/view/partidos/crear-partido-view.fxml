@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefWidth="440.0" styleClass="esports-container-card" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.com.cisaacap.tourney.controller.dashboard.CrearPartidoController">
+    <stylesheets>
+        <URL value="@/main/resources/css/dashboard/dashboard-view.css" />
+    </stylesheets>
+    <children>
+        <VBox spacing="15.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="15.0">
+            <children>
+                <HBox alignment="CENTER_RIGHT" prefHeight="30.0">
+                    <children>
+                        <Label styleClass="esports-title" text="CREAR NUEVO PARTIDO" />
+                        <Region HBox.hgrow="ALWAYS" />
+                        <Button fx:id="closeButton" mnemonicParsing="false" onAction="#handleCancelar" styleClass="window-btn-close" text="✕" />
+                    </children>
+                </HBox>
+
+                <VBox spacing="5.0">
+                    <children>
+                        <Label styleClass="esports-field-label" text="Torneo" />
+                        <ComboBox fx:id="torneoComboBox" prefWidth="400.0" promptText="Seleccionar Torneo" styleClass="esports-text-field" />
+                    </children>
+                </VBox>
+
+                <HBox spacing="10.0">
+                    <children>
+                        <VBox spacing="5.0" HBox.hgrow="ALWAYS">
+                            <children>
+                                <Label styleClass="esports-field-label" text="Equipo Local" />
+                                <ComboBox fx:id="localComboBox" prefWidth="195.0" promptText="Local" styleClass="esports-text-field" />
+                            </children>
+                        </VBox>
+                        <VBox spacing="5.0" HBox.hgrow="ALWAYS">
+                            <children>
+                                <Label styleClass="esports-field-label" text="Equipo Visitante" />
+                                <ComboBox fx:id="visitanteComboBox" prefWidth="195.0" promptText="Visitante" styleClass="esports-text-field" />
+                            </children>
+                        </VBox>
+                    </children>
+                </HBox>
+
+                <HBox spacing="10.0">
+                    <children>
+                        <VBox spacing="5.0" HBox.hgrow="ALWAYS">
+                            <children>
+                                <Label styleClass="esports-field-label" text="Fecha del Partido" />
+                                <DatePicker fx:id="fechaPicker" prefWidth="195.0" />
+                            </children>
+                        </VBox>
+                        <VBox spacing="5.0" HBox.hgrow="ALWAYS">
+                            <children>
+                                <Label styleClass="esports-field-label" text="Hora (HH:mm)" />
+                                <TextField fx:id="horaField" promptText="15:30" styleClass="esports-text-field" />
+                            </children>
+                        </VBox>
+                    </children>
+                </HBox>
+
+                <HBox spacing="10.0">
+                    <children>
+                        <VBox spacing="5.0" HBox.hgrow="ALWAYS">
+                            <children>
+                                <Label styleClass="esports-field-label" text="Puntos Local" />
+                                <TextField fx:id="puntosLocalField" text="0" styleClass="esports-text-field" />
+                            </children>
+                        </VBox>
+                        <VBox spacing="5.0" HBox.hgrow="ALWAYS">
+                            <children>
+                                <Label styleClass="esports-field-label" text="Puntos Visitante" />
+                                <TextField fx:id="puntosVisitanteField" text="0" styleClass="esports-text-field" />
+                            </children>
+                        </VBox>
+                    </children>
+                </HBox>
+
+                <Label fx:id="statusLabel" alignment="CENTER" prefWidth="400.0" style="-fx-text-fill: #e63946; -fx-font-size: 11px;" text="" wrapText="true" />
+
+                <HBox alignment="CENTER" spacing="15.0">
+                    <children>
+                        <Button mnemonicParsing="false" onAction="#handleCancelar" prefHeight="35.0" prefWidth="120.0" styleClass="window-btn-close" text="CANCELAR" />
+                        <Button mnemonicParsing="false" onAction="#handleGuardarPartido" prefHeight="35.0" prefWidth="150.0" styleClass="esports-btn-primary" text="PROGRAMAR" />
+                    </children>
+                </HBox>
+            </children>
+        </VBox>
+    </children>
+</AnchorPane>
